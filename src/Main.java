@@ -10,15 +10,13 @@ public class Main {
         TabuleiroSudoku tabuleiroSudoku = new TabuleiroSudoku();
         Player player = new Player();
 
+        //tabuleiroSudoku.verTabuleiro(tabuleiro);
         tabuleiroSudoku.geraTab(tabuleiro);
-        for(TabuleiroSudoku[] e:tabuleiro){
-            System.out.println(Arrays.deepToString(e));
+        tabuleiroSudoku.verTabuleiro(tabuleiro);
 
-        }
         int tempLinha;
         int tempColuna;
         int num;
-    while(true) {
         System.out.println("Insira Linha:");
         tempLinha = sc.nextInt();
         System.out.println("Insira Coluna:");
@@ -31,12 +29,11 @@ public class Main {
         int posicaoTabLinha = player.posicaoTab(tempLinha);
         int posicaoTabColuna = player.posicaoTab(tempColuna);
         if (tabuleiroSudoku.comparador(tabuleiro, posicaoLinha, posicaoColuna, num, posicaoTabLinha, posicaoTabColuna)) {
-            tabuleiroSudoku.addTabuleiro(tabuleiro, posicaoTabLinha, posicaoTabColuna, posicaoLinha, posicaoColuna, num);
+            tabuleiro = tabuleiroSudoku.addTabuleiro(tabuleiro, posicaoTabLinha, posicaoTabColuna, posicaoLinha, posicaoColuna, num);
+        }else{
+            System.out.println("Errou!!!");
         }
-        for (TabuleiroSudoku[] e : tabuleiro) {
-            System.out.println(Arrays.deepToString(e));
-            System.out.println();
-        }
-    }
+
+        tabuleiroSudoku.verTabuleiro(tabuleiro);
     }
 }
