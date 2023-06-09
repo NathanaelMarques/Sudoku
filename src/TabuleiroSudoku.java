@@ -8,7 +8,7 @@ public class TabuleiroSudoku {
     public TabuleiroSudoku(){}
 
 
-    // GERADOR DO TABULEIRO(FALTANDO IMPLEMENTAR LÓGICA PARA GERAR NÚMEROS CORRETAMENTE)
+    // GERADOR DO TABULEIRO
     public TabuleiroSudoku[][] geraTab(TabuleiroSudoku[][] tabuleiro){
         Random random = new Random();
         int numRandom;
@@ -18,7 +18,7 @@ public class TabuleiroSudoku {
                 for (int x = 0; x < quadrante.length; x++) {
                     for (int y = 0; y < quadrante[x].length; y++) {
                         tabuleiro[c][z].quadrante[x][y] = 0;
-                        numRandom = random.nextInt(10);
+                        numRandom = random.nextInt(9) + 1;
                         if(comparador(tabuleiro,x,y,numRandom,c,z)){
                             tabuleiro[c][z].quadrante[x][y] = numRandom;
                         }
@@ -110,7 +110,6 @@ public class TabuleiroSudoku {
         }
 
     }
-
 
 
 
