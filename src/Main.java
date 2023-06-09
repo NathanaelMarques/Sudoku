@@ -9,11 +9,11 @@ public class Main {
         TabuleiroSudoku[][] tabuleiro = new TabuleiroSudoku[3][3];
         TabuleiroSudoku tabuleiroSudoku = new TabuleiroSudoku();
         Player player = new Player();
-        tabuleiroSudoku.geraTab(tabuleiro);
-        TabuleiroSudoku[][] tabuleiroSudokus = tabuleiro;
-        tabuleiroSudokus[1][1].quadrante[1][1] = 4;
+
+        tabuleiroSudoku.validTabuleiro(tabuleiro);
         tabuleiroSudoku.verTabuleiro(tabuleiro);
-        System.out.println(tabuleiro.equals(tabuleiroSudokus));
+
+
         int tempLinha;
         int tempColuna;
         int num;

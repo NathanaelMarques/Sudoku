@@ -1,28 +1,32 @@
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 public class TabuleiroSudoku {
 
     Integer[][] quadrante = new Integer[3][3];
 
     public TabuleiroSudoku(){}
+    private Integer gerarNum(TabuleiroSudoku[][] tabuleiro, int x,int y,int z,int c){
+        LinkedList<Integer> numAleatorios = new LinkedList<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
 
+        Random random = new Random();
+        for(int i = 0;i<numAleatorios.size();i++){
+            int num = numAleatorios.get(random.nextInt(numAleatorios.size()-1));
+            numAleatorios.remove(numAleatorios.indexOf(num));
+            if(comparador(tabuleiro,x,y,num,c,z)){
+                return num;
+            }
+        }
+        return 0;
+    }
 
     // GERADOR DO TABULEIRO
-    public TabuleiroSudoku[][] geraTab(TabuleiroSudoku[][] tabuleiro){
-        Random random = new Random();
-        int numRandom;
+    private TabuleiroSudoku[][] geraTab(TabuleiroSudoku[][] tabuleiro){
         for(int c = 0; c < tabuleiro.length; c++) {
             for (int z = 0; z < tabuleiro.length; z++) {
                 tabuleiro[c][z] = new TabuleiroSudoku();
                 for (int x = 0; x < quadrante.length; x++) {
                     for (int y = 0; y < quadrante[x].length; y++) {
-                        tabuleiro[c][z].quadrante[x][y] = 0;
-                        numRandom = random.nextInt(9) + 1;
-                        if(comparador(tabuleiro,x,y,numRandom,c,z)){
-                            tabuleiro[c][z].quadrante[x][y] = numRandom;
-                        }
-
+                            tabuleiro[c][z].quadrante[x][y] = gerarNum(tabuleiro,x,y,z,c);
                     }
                 }
             }
@@ -30,6 +34,30 @@ public class TabuleiroSudoku {
         return tabuleiro;
     }
 
+    public TabuleiroSudoku[][] validTabuleiro(TabuleiroSudoku[][] tabuleiro){
+        geraTab(tabuleiro);
+        if(resolveTabuleiro(tabuleiro) == null){
+            return validTabuleiro(tabuleiro);
+        }
+        return tabuleiro;
+    }
+
+    private TabuleiroSudoku[][] resolveTabuleiro(TabuleiroSudoku[][] tabuleiro){
+        for(int cx = 0; cx < tabuleiro.length; cx++){
+            for(int cy = 0; cy < tabuleiro[cx].length; cy++){
+                for(int x = 0; x <tabuleiro[cx][cy].quadrante.length; x++){
+                    for(int y = 0; y < tabuleiro[cx][cy].quadrante[x].length; y++){
+                        for(int num = 1; num <= 9;num++){
+                            if(tabuleiro[cx][cy].quadrante[x][y] < 1 && comparador(tabuleiro,x,y,num,cx,cy)){
+                                tabuleiro[cx][cy].quadrante[x][y] = num;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return tabuleiro;
+    }
     // VERIFICADORES
     private boolean verificaLinha(TabuleiroSudoku[][] tabuleiro, int linha, Integer input,int coordenadasX){
 
@@ -100,7 +128,6 @@ public class TabuleiroSudoku {
                          }else {
                              System.out.print("|" + " |");
                          }
-
                     }
                     System.out.print(" ");
                 }
@@ -110,7 +137,4 @@ public class TabuleiroSudoku {
         }
 
     }
-
-
-
 }
